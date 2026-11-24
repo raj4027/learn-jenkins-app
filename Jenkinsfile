@@ -15,6 +15,8 @@ pipeline {
                     node --version
                     npm --version
                     npm ci
+                    npm run build
+                    ls -la
                '''
             }
         }
@@ -24,7 +26,6 @@ pipeline {
                     echo "Running tests..."
                     test -f build/index.html
                     npm test
-                    npm run build
                 '''
             }
         }
