@@ -78,7 +78,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+       /* stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -88,7 +88,7 @@ pipeline {
             steps {
                 sh 'npm ci && npm run build'
             }
-        }
+        }*/
 
         stage('Test') {
             agent {
@@ -100,6 +100,11 @@ pipeline {
             steps {
                 sh 'npm test'
             }
+        }
+    }
+    post {
+        always {
+            junit 'test-results.xml'
         }
     }
 }
