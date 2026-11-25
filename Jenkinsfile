@@ -40,7 +40,7 @@
 */
 
 //option -2
-
+/*
 pipeline {
     agent {
         docker {
@@ -70,11 +70,11 @@ pipeline {
         }
     }
 }
-
+*/
 
 //option -3
 
-/*pipeline {
+pipeline {
     agent any
 
     stages {
@@ -102,4 +102,4 @@ pipeline {
             }
         }
     }
-}*/
+}
