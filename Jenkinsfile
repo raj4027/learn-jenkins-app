@@ -111,16 +111,16 @@ pipeline {
             steps {
                 sh '''
                     npm install serve
-                    npx serve -s build &
-                    npx playwright install --with-deps
-                    npx playwright test --reporter=junit --output=test-results
+                    npx learn-jenkins-app/node_modules/semver -s build &
+                    // npx playwright install --with-deps
+                    npx playwright test
                 '''
             }
         }
     }
     post {
         always {
-            junit 'test-results/junit.xml'
+            junit 'jest-results/junit.xml'
         }
     }
 }
