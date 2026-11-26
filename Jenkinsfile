@@ -114,9 +114,6 @@ pipeline {
                 sh '''
                     echo "Running E2E tests..."
                     npm ci
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    sleep 10
                     npx playwright test
                 '''
             }
