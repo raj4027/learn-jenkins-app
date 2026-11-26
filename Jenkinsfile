@@ -78,6 +78,7 @@ pipeline {
     agent any
 
     stages {
+        // Stage 1: Build
         stage('Build') {
             agent {
                 docker {
@@ -89,7 +90,7 @@ pipeline {
                 sh 'npm ci && npm run build'
             }
         }
-
+        // Stage 2: Unit Testing
         stage('Test') {
             agent {
                 docker {
@@ -101,6 +102,7 @@ pipeline {
                 sh 'npm test'
             }
         }
+        // Stage 3: End-to-End Testing
         stage('E2E') {
             agent {
                 docker {
@@ -110,6 +112,8 @@ pipeline {
             }
             steps {
                 sh '''
+                    echo "Running E2E tests..."
+                    npm ci
                     npm install serve
                     node_modules/.bin/serve -s build &
                     sleep 10
