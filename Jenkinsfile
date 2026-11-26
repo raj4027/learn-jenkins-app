@@ -91,7 +91,44 @@ pipeline {
             }
         }
         // Stage 2: Unit Testing
-        stage('Test') {
+        //parallel stages
+        stage ('Test')
+        {
+            parallel {
+                stage('Unit Test') {
+                    agent {
+                        docker {
+                            image 'node:18-alpine'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        sh '''
+                            #test -f build/index.html
+                            npm test
+                        '''
+                    }
+                }
+                stage('E2E Test') {
+                    agent {
+                        docker {
+                            image 'mcr.microsoft.com/playwright:v1.39.0-janmy'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        sh '''
+                            echo "Running E2E tests..."
+                            npm install serve
+                            node_modules/.bin/serve -s build &
+                            sleep 10
+                            npx playwright test
+                        '''
+                    }
+                }
+            }
+        }
+       /* stage('Test') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -119,7 +156,7 @@ pipeline {
                     npx playwright test
                 '''
             }
-        }
+        }*/
     }
     post {
         always {
