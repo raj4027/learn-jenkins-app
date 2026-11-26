@@ -112,7 +112,6 @@ pipeline {
                 sh '''
                     npm install serve
                     npx learn-jenkins-app/node_modules/server -s build &
-                    // npx playwright install --with-deps
                     npx playwright test
                 '''
             }
